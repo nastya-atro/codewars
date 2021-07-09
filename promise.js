@@ -169,3 +169,46 @@ Output array
   [-3,  2,  1, -5,  1 ]
 ]
 
+#2
+Write a function that takes in a string of one or more words, and returns the same string, but with all five or more letter words reversed (like the name of this kata).
+
+Strings passed in will consist of only letters and spaces.
+Spaces will be included only when more than one word is present.
+
+function spinWords(str){
+  let a=str.split(' ').map(el=>el.length>=5 ? el.split('').reverse(): el.split('')).map(el=>el.join('')).join(' ')
+  return a
+}
+
+
+spinWords('Hey wollef sroirraw')
+
+Output spinWords("Hey fellow warriors") => "Hey wollef sroirraw" 
+
+
+
+#3
+Check to see if a string has the same amount of 'x's and 'o's. The method must return a boolean and be case insensitive. The string can contain any char.
+
+
+function XO(str) {
+   let a=str.toLowerCase().split('')
+    let x=[]
+    let y=[]
+    for(let i=0; i<=a.length; i++){    
+      a[i]==='x' && x.push('x')
+      a[i]==='o' && y.push('o')   
+    }
+    
+    if(x.length === y.length){
+      return true
+    }else {
+      return false
+    }
+  }
+
+Output 
+XO("ooxx") => true
+XO("xooxx") => false
+
+
