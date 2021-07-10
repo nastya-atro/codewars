@@ -319,3 +319,26 @@ else return false;
 }
 
 
+Your goal in this kata is to implement a difference function, which subtracts one list from another and returns the result.
+
+It should remove all values from list a, which are present in list b keeping their order.
+
+arrayDiff([1,2],[1]) == [2]
+
+function arrayDiff(a, b) {
+  let d = []
+
+  for (let i = 0; i <= a.length; i++) {
+    let x = 0
+    for (let y = 0; y <= b.length; y++) {
+      if (a[i] === b[y]) {
+        x += 1
+      }
+    }
+      x === 0 && d.push(a[i])
+
+    }
+  return d
+}
+
+
