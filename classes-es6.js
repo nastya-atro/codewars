@@ -125,3 +125,123 @@ const circle1 = new Circle({
 })
 
 circle1.show()
+
+
+// ###
+
+function xxx(param) {
+    return class {
+        sayHi() {
+            alert(param)
+        }
+    }
+}
+
+let User = xxx('HI')
+
+new User().sayHi()
+
+// ###
+
+class User{
+    constructor(param){
+        this.name = param.name;
+        this.age = param.age;
+    }
+
+    sayHi(){
+        alert(this.name)
+    }
+
+    get name(){
+        return this._name
+
+    }
+    set name(value){
+        if (value.length < 4) {
+            alert("Имя слишком короткое.");
+            return;
+          }
+          this._name = value;
+        
+    }
+}
+
+let user1 = new User({
+    name : 'Shon',
+    age: 45
+})
+
+// ###
+
+class User {
+
+    pathName = 'Dorian'; // cвойсво
+
+    constructor(name) {
+        this.name = name;
+    }
+
+    get x() {
+        return this._name // геттер
+
+    }
+    set x(value) {             // сеттер
+        if (value.length < 4) {
+            alert("Имя слишком короткое.");
+            return;
+        }
+        this.name = value;
+    }
+
+    ['say' + 'Hi']() {
+        alert(this.pathName) // вычисляемле свйство
+    }
+
+
+}
+
+console.log(new User().sayHi()) // Dorian
+
+
+// ###
+
+class Animal{
+    constructor(name){
+        this.speed = 0;
+        this.name = name;
+    }
+
+    run(speed){
+        this.speed = speed;
+        alert(`${this.name} бежит со скоростью ${this.speed}`);
+    }
+
+    stop(){
+        this.speed = 0;
+        alert(`${this.name} стоит`);
+    }
+}
+
+class Rabbit extends Animal{
+    constructor(name, age) {
+        super(name);
+        this.age = age
+    }
+
+    hide(){
+        alert(`${this.name} прячется`);
+    }
+    stop(){
+        super.stop()
+        this.hide();
+    }
+}
+
+let rabbit = new Rabbit('Djo', 20)
+
+rabbit.run(20) // Djo бежит со скоростью 20
+rabbit.stop()
+// Djo стоит
+// Djo прячется
+console.log(rabbit.age) // 20
