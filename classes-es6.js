@@ -245,3 +245,163 @@ rabbit.stop()
 // Djo стоит
 // Djo прячется
 console.log(rabbit.age) // 20
+
+//
+// ####
+//
+
+class Article{
+    constructor(title, date){
+        this.title = title;
+        this.date = date;
+    }
+
+    static minus(article1, article2){
+        return article1.date -article2.date
+    }
+}
+
+let articles=[
+    new Article('First', new Date(2021, 10, 1)),
+    new Article('Second', new Date(1996, 0, 1)),
+    new Article('Third', new Date(2022, 1, 1)),
+]
+
+articles.sort(Article.minus)
+alert(articles[0].title)
+
+
+//
+// ###
+//
+
+class CoffeeMachine{
+    _water = 0  // приватный метод, менять через него нельзя
+
+    get waterAmount() { // у _water есть только get значит мы можем только читать но не изменять
+        return this._water;
+    }
+
+    constructor(power) {
+        this._power = power // приватный метод, менять через него нельзя
+        alert(`мощность ${power}`)
+    }
+    get power() {
+        return this._power;  // _power можно читать
+    }
+    set power(poser) {
+        this._power = poser; // _power можно изменять
+    }
+}
+
+let coffeeMachine = new CoffeeMachine(100)
+
+//
+// ###
+//
+
+class CoffeeMachine{
+    #waterLimit = 200
+
+    checkWaterLimit(value){
+        if(value<0) throw new Error('Отрицательное значение')
+        if(value > this.#waterLimit) throw new Error('Слишком много воды')
+    }
+}
+
+let coffeeMachine = new CoffeeMachine()
+console.log(coffeeMachine.checkWaterLimit(-1)); //  Uncaught Error: Отрицательное значение
+console.log(coffeeMachine.checkWaterLimit(300)); //  Uncaught Error: Слишком много воды
+
+//
+// ###
+//
+
+class CoffeeMachine{
+    #waterLimit = 100
+
+    get waterLimit(){
+        return this.#waterLimit
+
+    }
+
+    set waterLimit(value){
+        if(value<0) throw new Error(`Отрицательное значение`)
+        if(value>this.#waterLimit) throw new Error(`Слишком много воды`)
+        return this.#waterLimit = value
+    }
+}
+
+let coffeeMachine = new CoffeeMachine()
+
+//
+// ###
+//
+
+class PowerArray extends Array{
+    isReset(){
+        return this.length === 0
+    }
+}
+
+let arr = new PowerArray(1,2,3,4,5)
+alert(arr.isReset()) //false
+
+let filteredArr = arr.filter(item => item < 3)
+alert (filteredArr) //1,2
+alert(filteredArr.isReset()) // false (Отфильтрованные массив наследуется от PowerArray)
+console.log(filteredArr.constructor === PowerArray); // true
+
+//
+// ###
+//
+
+class PowerArray extends Array{
+    isReset(){
+        return this.length === 0
+    }
+
+    // встроенные методы массива будут использовать этот метод как конструктор
+    static get [Symbol.species]() {
+        return Array;
+    }
+}
+
+let arr = new PowerArray(1,2,3,4,5)
+alert(arr.isReset()) //false
+
+let filteredArr = arr.filter(item => item < 3)
+
+filteredArr.isReset() // TypeError: filteredArr.isReset is not a function
+alert(filteredArr.constructor === Array); // true
+
+//
+// ###
+//
+
+// создаем прмиесь
+let sayCombo={
+    say(value){
+        alert(value)
+    }
+}
+// создаем примесь наследующую примесь sayCombo
+let sayHiCombo={
+    __proto__: sayCombo,
+    sayHi(){
+        super.say(`Привет, ${this.name}`)
+    },
+    sayBy(){
+        super.say(`Пока, ${this.name}`)
+    }
+}
+
+class User{
+    constructor(name) {
+        this.name = name
+    }
+}
+// копируем методы
+Object.assign(User.prototype, sayHiCombo)
+
+new User('Mari').sayHi() // Привет, Mari
