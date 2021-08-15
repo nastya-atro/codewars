@@ -210,7 +210,114 @@ promise.then((response)=>{
 // 41 Stop
 
 
+//
+// ###
+//
 
+setTimeout(function(){
+    try{
+        x
+    }catch (err){
+        console.log('error: '+ err.name) // error: ReferenceError
+        console.log('error: '+ err.message) // error: x is not defined
+        console.log('error: '+ err.stack) // error: ReferenceError: x is not defined at...
+    }
+
+},1000)
+
+//
+// ###
+//
+
+try{
+    let user={
+        age: 23
+    }
+    if(!user.name) throw new Error('WOOOPS')
+}catch(err){
+    console.log(err)
+}
+
+//
+// ###
+//
+class NewError extends Error{
+    constructor(message) {
+        super(message);
+        this.name = 'NewError'
+    }
+}
+
+class EmptyValueError extends NewError{
+    constructor(value) {
+        super('Empty value: ' + value);
+        this.name = 'EmptyValueError'
+        this.value = value
+    }
+}
+
+function start(){
+    let user={
+        name: 'z',
+        age: 44
+    }
+
+    if(!user.name)throw new EmptyValueError('name')
+    if(!user.age)throw new EmptyValueError('age')
+    console.log(user)
+
+}
+
+try{
+    start()
+}catch(err){
+    if(err instanceof NewError) {console.log('Error: '+err)}
+    else if (err instanceof SyntaxError) {console.log('SYNTAX ERROR: '+err)}
+    else if (err instanceof ReferenceError) {console.log('ReferenceError: '+err)}
+    else{
+        throw err}
+}
+
+//
+// ###
+//
+
+class NewError extends Error{
+    constructor(message) {
+        super(message);
+        this.name = 'NewError'
+    }
+}
+
+class EmptyValueError extends NewError{
+    constructor(value) {
+        super('Empty value: ' + value);
+        this.name = 'EmptyValueError'
+        this.value = value
+    }
+}
+
+function start(){
+    let user={
+        name: 'z',
+        age: 44
+    }
+
+    if(!user.name)throw new EmptyValueError('name')
+    if(!user.age)throw new EmptyValueError('age')
+    console.log(user)
+
+}
+
+try{
+    start()
+}catch(err){
+    if(err instanceof NewError) {console.log('Error: '+err)}
+    else if (err instanceof SyntaxError) {console.log('SYNTAX ERROR: '+err)}
+    else if (err instanceof ReferenceError) {console.log('ReferenceError: '+err)}
+    else{
+        throw err}
+}
 
 
 

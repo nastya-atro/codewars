@@ -405,3 +405,49 @@ class User{
 Object.assign(User.prototype, sayHiCombo)
 
 new User('Mari').sayHi() // Привет, Mari
+
+
+//
+// Без синтаксиса исп-го class
+//
+
+
+const Animal = function(options){
+    this.name = options.name;
+    this.color = options.color
+
+}
+
+Animal.prototype.voice= function(){
+    console.log(`Voice is ${this.name}`)
+}
+
+const dog = new Animal({name: 'Bob', color:'White'})
+
+
+const Cat = function(options){
+    Animal.apply(this, arguments)
+    this.age = options.age
+}
+
+Cat.prototype = Object.create(Animal.prototype)
+
+Animal.prototype.voice= function(){
+    console.log(`New text ${this.name}`)
+}
+
+Cat.prototype.voice = function(){
+    Animal.prototype.voice.apply(this, arguments)
+    console.log(`New text for cat ${this.name}`)
+}
+
+const cat = new Cat({name:'Meo', color:'black', age: 3})
+
+console.log(dog.voice())
+// New text Bob
+
+console.log(cat.voice());
+// New text Meo
+// New text for cat Meo
+
+
