@@ -319,5 +319,32 @@ try{
         throw err}
 }
 
+//
+// ###
+//
+
+const delay=(ms)=>{
+    return new Promise(res => setTimeout(()=>res(), ms))
+}
+
+// delay(2000).then(console.log('HI'))
+
+const fetchTodos= async ()=>{
+    console.log('Start')
+    await delay(2000)
+    try{
+        const x =  await fetch('https://jsonplaceholder.typicode.com/todos')
+        const y= await x.json()
+        console.log(y)
+    }catch (err){
+        console.log(err)
+    }
+
+
+
+}
+fetchTodos()
+
+
 
 
