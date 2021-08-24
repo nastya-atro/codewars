@@ -188,3 +188,79 @@ users = new IndexArray([
 ])
 
 console.log(users.findById(3)) // {id: 3, name: 'll'},
+
+//
+// ###
+//
+
+let user ={
+    _name: 'First',
+    get name(){
+        return this._name
+    }
+}
+let user1 = new Proxy(user,{
+    get(t,p, receiver){
+        return `This name is: ${t[p]}`
+    }
+})
+
+console.log(user1.name) // This name is: First
+
+let admin={
+    __proto__:user1,
+    _name: 'New'
+}
+console.log(admin.name) // This name is: First
+
+let user2 = new Proxy(user,{
+    get(t,p, receiver){
+        // return Reflect.get(t,p, receiver)
+        return Reflect.get(...arguments);
+    }
+})
+
+let admin2={
+    __proto__:user2,
+    _name: 'New'
+}
+console.log(admin2.name) // New
+
+//
+// ###
+//
+
+function delay(f, ms){
+    return new Proxy(f,{
+        apply(target, thisArg, argArray) {
+            setTimeout(()=>f.apply(thisArg, argArray), ms)
+        }
+    })
+}
+
+function sayHi(user){
+    console.log(`hi ${user}`)
+}
+
+sayHi = delay(sayHi, 2000)
+
+sayHi('ss')
+
+//
+// ###
+//
+
+let range = {
+    start: 1,
+    end: 10
+};
+
+range = new Proxy(range, {
+    has(target, p) {
+        return p>target.start && p<target.end
+    }
+})
+
+console.log(0 in range) // false
+console.log(5 in range) // true
+console.log(11 in range) // false
