@@ -341,4 +341,62 @@ function arrayDiff(a, b) {
   return d
 }
 
+//
+//###
+//
 
+// На вход вашей функции подаётся 3 аргумента, первым аргументом utilObj является объект с набором методов, вторым (targetObj) - другой объект, и третьим параметр примитивного типа param.
+// Ваша задача - вызвать каждый метод(функцию) первого объекта по порядку с контекстом второго объекта и параметром param.
+
+// Sample Input 1:
+// obj1;{"name":"Tom","id":"3"};ID
+// Sample Output 1:
+// Tom ID:3
+
+function func(utilObj,targetObj,param){
+    let f;
+       for (let key in utilObj) {
+       if (typeof utilObj[key]  === 'function') {
+           
+           f = utilObj[key].call(targetObj, param);   
+         
+       }
+      }
+}
+
+//
+// ###
+//
+// Реализуйте функцию mergeLeft, которая должна вызываться у любого объекта (быть в прототипе Object) - obj.mergeLeft(obj2)и возвращать модифицированный объект (obj).
+// Суть функции в том, чтобы складывать свойства двух объектов, а вернее в объект, на котором был осуществлен вызов этой функции (выше это obj) добавлять свойства из объекта-аргумента (obj2), при этом если свойство из obj2 уже существует в obj, то оставить его без изменений в obj.
+// Также mergeLeft должна вести список "неродных свойств объекта"(добавленных в него функцией mergeLeft) в самом объекте, на котором был совершен вызов, в виде одномерного массива в поле mergedProperties. Если не зафиксировано никаких изменений, то и поле mergedProperties добавлять не нужно!
+
+// Sample Input 1:
+
+// {"a":1};{"a":10,"b":20,"c":30};{"c":300,"d":400}
+// Sample Output 1:
+
+// a:1
+// b:20
+// c:30
+// d:400
+// mergedProperties:b,c,d
+
+function mergeLeft(obj){
+
+    let a =[]
+    if('mergedProperties' in this) a = this.mergedProperties
+    let result = this;
+   delete result['mergedProperties']
+    for(let key in obj){
+        if (obj.hasOwnProperty(key)){
+          if(!(key in this)){
+              result[key] = obj[key]
+              a.push(key)
+          }
+        }
+    }
+    result['mergedProperties'] = a
+    return result
+}
+Object.prototype.mergeLeft = mergeLeft
