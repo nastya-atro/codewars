@@ -400,3 +400,39 @@ function mergeLeft(obj){
     return result
 }
 Object.prototype.mergeLeft = mergeLeft
+
+//
+// ###
+//
+//На вход вашей функции computeJSON(json,obj) поступает 2 аргумента, json - json-строка содержащая объект, obj - javascript объект. Ваша задача, спарсить полученый json-объект и добавить в него все свойства из obj, которых нет в json ,и вернуть из функции обновлённый json объект.
+// Sample Input:
+
+// {"name":"valuesObj","value":[1,2,3]};{"name":"valuesObj","id":7}
+// Sample Output:
+
+// {"name":"valuesObj","value":[1,2,3],"id":7}
+
+
+function computeJSON(json,obj){
+         return JSON.stringify({...JSON.parse(json), ...obj})
+}
+
+
+
+// Найдите и верните из функции findMiddle() средний элемент, по следующему правилу:
+// ['a','b','c'] => 'b'
+// ['a','b','c','d'] => 'b'
+// ['a','b','c','d','e'] => 'c'
+// //Крайние случаи:
+// [] => null
+// ['a'] => 'a'
+// [null] => undefined
+// ['a',null,'c'] => 'a'
+// ['a','b','c',null, null] => 'b'
+
+const findMidlle = (arr) => {
+    if (arr.length === 0)
+        return null;
+    arr = arr.filter(el => el !== null);
+    return arr[Math.floor((arr.length - 1)/2)];
+}
