@@ -436,3 +436,25 @@ const findMidlle = (arr) => {
     arr = arr.filter(el => el !== null);
     return arr[Math.floor((arr.length - 1)/2)];
 }
+
+
+// Верните длину самой длинной подстроки из повторяющихся символов из функции repeatSub без учета регистра. Если строка пустая то вернуть 0;
+
+function repeatSub(str){
+    let arr = [...str.toUpperCase()]
+    let x = new Set(arr)
+    let y = []
+    if(arr.length === 0){
+        return 0
+    } else {
+        x.forEach((el)=>{
+            let results = arr.filter((item, index, array)=> item ===el);
+            y.push(results.length)
+        })
+        return Math.max(...y)
+    }
+
+}
+
+repeatSub('sdsfffa')
+
