@@ -458,3 +458,25 @@ function repeatSub(str){
 
 repeatSub('sdsfffa')
 
+// Представьте что вы получаете с api :
+// Массив объектов с информацией о задачах сотрудников
+// Способ их отображения-группировки (далее мод-mode)
+// Таким образом, если вы получаете мод - task , то нужно сделать следующее: 
+// Создать ключ с именем задачи (поле task) и присвоить ему массив с объектами, содержащие fio и complete (статус задачи).
+// А если мод "fio" то сгруппировать по имени:
+
+function parseTasks(taskArray,mode){
+    let set = new Set()
+    let map = new Map()
+        taskArray.forEach((el)=>{
+            set.add(el[mode]);
+           // delete el[mode];
+        })
+        set.forEach((el) => {
+           let x = taskArray.filter((k) => k[mode] === el);
+            x.forEach((z)=>delete z[mode])
+            map.set(el, x)
+        })
+    
+    return map
+}
